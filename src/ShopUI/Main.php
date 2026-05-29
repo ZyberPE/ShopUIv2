@@ -12,7 +12,7 @@ use onebone\economyapi\EconomyAPI;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
-use pocketmine\item\ItemFactory;
+use pocketmine\item\StringToItemParser;
 
 use pocketmine\player\Player;
 
@@ -217,15 +217,28 @@ class Main extends PluginBase{
             return;
         }
 
-        $economy->reduceMoney($player, $price);
-
-        $item = ItemFactory::getInstance()->get(
-            (int)$itemData["id"],
-            (int)$itemData["meta"],
-            $amount
+        $item = StringToItemParser::getInstance()->parse(
+            (string)$itemData["id"]
         );
 
+        if($item === null){
+            return;
+        }
+
+        $item->setCount($amount);
+
         $item->setCustomName($itemData["custom-name"]);
+
+        if(!$player->getInventory()->canAddItem($item)){
+
+            $player->sendMessage(
+                $this->getConfig()->get("messages")["inventory-full"]
+            );
+
+            return;
+        }
+
+        $economy->reduceMoney($player, $price);
 
         $player->getInventory()->addItem($item);
 
