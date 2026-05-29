@@ -1,62 +1,155 @@
+```yaml id="2z6r3n"
 messages:
+
   shop-open: "§aOpened ShopUI"
+
   shop-close: "§cClosed ShopUI"
 
   confirm-title: "§l§aConfirm Purchase"
+
   confirm-content: "§7Buy §f{amount}x {item}\n§7Cost: §a${price}"
 
-  purchase-success: "§aPurchased §f{amount}x {item}"
+  purchase-success: "§aSuccessfully purchased §f{amount}x {item}"
+
   purchase-failed: "§cYou do not have enough money"
 
   purchase-cancelled: "§ePurchase cancelled"
+
   purchase-denied: "§cPurchase denied"
 
+  inventory-full: "§cClear some inventory space first"
+
 category-menu-title: "§l§8Shop Categories"
+
 item-menu-title: "§l§8Category Items"
 
 categories:
 
   blocks:
+
     name: "§6Blocks"
 
     items:
 
       stone:
+
         custom-name: "§7Stone"
-        id: 1
-        meta: 0
+
+        id: "stone"
+
         price: 50
 
       grass:
+
         custom-name: "§aGrass Block"
-        id: 2
-        meta: 0
+
+        id: "grass"
+
         price: 75
 
+      cobblestone:
+
+        custom-name: "§8Cobblestone"
+
+        id: "cobblestone"
+
+        price: 40
+
   ores:
+
     name: "§bOres"
 
     items:
 
       diamond:
+
         custom-name: "§bDiamond"
-        id: 264
-        meta: 0
+
+        id: "diamond"
+
         price: 1000
 
       emerald:
+
         custom-name: "§aEmerald"
-        id: 388
-        meta: 0
+
+        id: "emerald"
+
         price: 800
 
+      iron_ingot:
+
+        custom-name: "§fIron Ingot"
+
+        id: "iron_ingot"
+
+        price: 150
+
+      gold_ingot:
+
+        custom-name: "§6Gold Ingot"
+
+        id: "gold_ingot"
+
+        price: 250
+
   food:
+
     name: "§cFood"
 
     items:
 
       golden_apple:
+
         custom-name: "§6Golden Apple"
-        id: 322
-        meta: 0
+
+        id: "golden_apple"
+
         price: 500
+
+      cooked_beef:
+
+        custom-name: "§cCooked Beef"
+
+        id: "cooked_beef"
+
+        price: 35
+
+      bread:
+
+        custom-name: "§eBread"
+
+        id: "bread"
+
+        price: 20
+
+  combat:
+
+    name: "§4Combat"
+
+    items:
+
+      diamond_sword:
+
+        custom-name: "§bDiamond Sword"
+
+        id: "diamond_sword"
+
+        price: 2500
+
+      bow:
+
+        custom-name: "§6Bow"
+
+        id: "bow"
+
+        price: 1200
+
+      arrow:
+
+        custom-name: "§fArrow"
+
+        id: "arrow"
+
+        price: 5
+```
