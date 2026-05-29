@@ -1,0 +1,17 @@
+messages:
+  shop-open: "§aOpened ShopUI"
+  shop-close: "§cClosed ShopUI"
+
+  confirm-title: "§l§aConfirm Purchase"
+  confirm-content: "§7Are you sure you want to buy:\n§f{item}\n\n§7Price: §a${price}"
+
+  purchase-success: "§aSuccessfully purchased §f{item}"
+  purchase-failed: "§cYou do not have enough money"
+
+  purchase-cancelled: "§ePurchase cancelled"
+  purchase-denied: "§cPurchase denied"
+
+sounds:
+  enable: true
+  success: "random.orb"
+  fail: "note.bass"
