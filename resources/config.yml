@@ -3,15 +3,25 @@ messages:
   shop-close: "§cClosed ShopUI"
 
   confirm-title: "§l§aConfirm Purchase"
-  confirm-content: "§7Are you sure you want to buy:\n§f{item}\n\n§7Price: §a${price}"
+  confirm-content: "§7Buy §f{amount}x {item}\n§7Cost: §a${price}"
 
-  purchase-success: "§aSuccessfully purchased §f{item}"
-  purchase-failed: "§cYou do not have enough money"
+  purchase-success: "§aPurchased §f{amount}x {item}"
+  purchase-failed: "§cNot enough money"
 
   purchase-cancelled: "§ePurchase cancelled"
   purchase-denied: "§cPurchase denied"
 
-sounds:
-  enable: true
-  success: "random.orb"
-  fail: "note.bass"
+shop-title: "§l§8ShopUI"
+
+items:
+  diamond:
+    id: 264
+    meta: 0
+    amount: 1
+    price: 1000
+
+  golden_apple:
+    id: 322
+    meta: 0
+    amount: 1
+    price: 500
