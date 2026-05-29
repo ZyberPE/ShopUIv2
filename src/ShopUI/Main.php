@@ -12,7 +12,7 @@ use onebone\economyapi\EconomyAPI;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
-use pocketmine\item\VanillaItems;
+use pocketmine\item\ItemFactory;
 
 use pocketmine\player\Player;
 
@@ -43,16 +43,54 @@ class Main extends PluginBase{
 
     public function openShop(Player $player) : void{
 
-        $player->sendMessage($this->getConfig()->get("messages")["shop-open"]);
+        $player->sendMessage(
+            $this->getConfig()->get("messages")["shop-open"]
+        );
 
         $form = new SimpleForm(function(Player $player, ?int $data){
 
             if($data === null){
-                $player->sendMessage($this->getConfig()->get("messages")["shop-close"]);
+
+                $player->sendMessage(
+                    $this->getConfig()->get("messages")["shop-close"]
+                );
+
                 return;
             }
 
-            $items = array_values($this->getConfig()->get("items"));
+            $categories = array_values(
+                $this->getConfig()->get("categories")
+            );
+
+            if(!isset($categories[$data])){
+                return;
+            }
+
+            $this->openCategoryItems($player, $categories[$data]);
+        });
+
+        $form->setTitle(
+            $this->getConfig()->get("category-menu-title")
+        );
+
+        foreach($this->getConfig()->get("categories") as $category){
+
+            $form->addButton($category["name"]);
+        }
+
+        $player->sendForm($form);
+    }
+
+    public function openCategoryItems(Player $player, array $category) : void{
+
+        $form = new SimpleForm(function(Player $player, ?int $data) use ($category){
+
+            if($data === null){
+                $this->openShop($player);
+                return;
+            }
+
+            $items = array_values($category["items"]);
 
             if(!isset($items[$data])){
                 return;
@@ -61,12 +99,14 @@ class Main extends PluginBase{
             $this->openQuantityForm($player, $items[$data]);
         });
 
-        $form->setTitle($this->getConfig()->get("shop-title"));
+        $form->setTitle(
+            $this->getConfig()->get("item-menu-title")
+        );
 
-        foreach($this->getConfig()->get("items") as $name => $item){
+        foreach($category["items"] as $item){
 
             $form->addButton(
-                "§f" . ucfirst(str_replace("_", " ", $name)) .
+                $item["custom-name"] .
                 "\n§a$" . $item["price"]
             );
         }
@@ -79,7 +119,11 @@ class Main extends PluginBase{
         $form = new CustomForm(function(Player $player, ?array $data) use ($itemData){
 
             if($data === null){
-                $player->sendMessage($this->getConfig()->get("messages")["purchase-cancelled"]);
+
+                $player->sendMessage(
+                    $this->getConfig()->get("messages")["purchase-cancelled"]
+                );
+
                 return;
             }
 
@@ -108,7 +152,11 @@ class Main extends PluginBase{
         $form = new SimpleForm(function(Player $player, ?int $data) use ($itemData, $amount, $price){
 
             if($data === null){
-                $player->sendMessage($this->getConfig()->get("messages")["purchase-cancelled"]);
+
+                $player->sendMessage(
+                    $this->getConfig()->get("messages")["purchase-cancelled"]
+                );
+
                 return;
             }
 
@@ -119,23 +167,30 @@ class Main extends PluginBase{
                     break;
 
                 case 1:
-                    $player->sendMessage($this->getConfig()->get("messages")["purchase-denied"]);
+                    $player->sendMessage(
+                        $this->getConfig()->get("messages")["purchase-denied"]
+                    );
+
                     $this->openShop($player);
                     break;
 
                 case 2:
-                    $player->sendMessage($this->getConfig()->get("messages")["purchase-cancelled"]);
+                    $player->sendMessage(
+                        $this->getConfig()->get("messages")["purchase-cancelled"]
+                    );
                     break;
             }
         });
 
         $messages = $this->getConfig()->get("messages");
 
-        $itemName = VanillaItems::DIAMOND()->getName();
-
         $content = str_replace(
             ["{item}", "{amount}", "{price}"],
-            [$itemName, $amount, $price],
+            [
+                $itemData["custom-name"],
+                $amount,
+                $price
+            ],
             $messages["confirm-content"]
         );
 
@@ -164,19 +219,22 @@ class Main extends PluginBase{
 
         $economy->reduceMoney($player, $price);
 
-        $item = VanillaItems::fromString((string)$itemData["id"]);
+        $item = ItemFactory::getInstance()->get(
+            (int)$itemData["id"],
+            (int)$itemData["meta"],
+            $amount
+        );
 
-        if($item === null){
-            return;
-        }
-
-        $item->setCount($amount);
+        $item->setCustomName($itemData["custom-name"]);
 
         $player->getInventory()->addItem($item);
 
         $message = str_replace(
             ["{item}", "{amount}"],
-            [$item->getName(), $amount],
+            [
+                $itemData["custom-name"],
+                $amount
+            ],
             $this->getConfig()->get("messages")["purchase-success"]
         );
 
