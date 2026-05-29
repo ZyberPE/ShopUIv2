@@ -6,22 +6,57 @@ messages:
   confirm-content: "§7Buy §f{amount}x {item}\n§7Cost: §a${price}"
 
   purchase-success: "§aPurchased §f{amount}x {item}"
-  purchase-failed: "§cNot enough money"
+  purchase-failed: "§cYou do not have enough money"
 
   purchase-cancelled: "§ePurchase cancelled"
   purchase-denied: "§cPurchase denied"
 
-shop-title: "§l§8ShopUI"
+category-menu-title: "§l§8Shop Categories"
+item-menu-title: "§l§8Category Items"
 
-items:
-  diamond:
-    id: 264
-    meta: 0
-    amount: 1
-    price: 1000
+categories:
 
-  golden_apple:
-    id: 322
-    meta: 0
-    amount: 1
-    price: 500
+  blocks:
+    name: "§6Blocks"
+
+    items:
+
+      stone:
+        custom-name: "§7Stone"
+        id: 1
+        meta: 0
+        price: 50
+
+      grass:
+        custom-name: "§aGrass Block"
+        id: 2
+        meta: 0
+        price: 75
+
+  ores:
+    name: "§bOres"
+
+    items:
+
+      diamond:
+        custom-name: "§bDiamond"
+        id: 264
+        meta: 0
+        price: 1000
+
+      emerald:
+        custom-name: "§aEmerald"
+        id: 388
+        meta: 0
+        price: 800
+
+  food:
+    name: "§cFood"
+
+    items:
+
+      golden_apple:
+        custom-name: "§6Golden Apple"
+        id: 322
+        meta: 0
+        price: 500
